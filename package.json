@@ -1,0 +1,16 @@
+{
+	"name": "cse-341-web-services",
+	"version": "1.0.0",
+	"description": "Web Services project with frontend and backend",
+	"private": true,
+	"scripts": {
+		"dev": "pnpm --parallel --filter '*' dev",
+		"dev:backend": "pnpm --filter backend dev",
+		"dev:frontend": "pnpm --filter frontend dev",
+		"build": "pnpm --filter backend build && pnpm --filter frontend build",
+		"start": "pnpm --filter backend start"
+	},
+	"devDependencies": {
+		"concurrently": "^8.2.2"
+	}
+}
