@@ -1,6 +1,6 @@
 # CSE 341 Web Services
 
-A fullstack web application with Node.js/Express backend and MongoDB database using pnpm workspaces.
+A fullstack web application with frontend and backend using pnpm workspaces.
 
 ## Project Structure
 
@@ -13,16 +13,8 @@ CSE 341 Web Services/
 ├── backend/            # Server-side application
 │   ├── server.js       # Main server file
 │   ├── package.json    # Backend dependencies
-│   ├── data/           # Database connection
-│   │   └── database.js
-│   ├── controllers/    # Request handlers
-│   │   └── contacts.js
-│   ├── services/       # Business logic
-│   │   └── contacts.js
-│   ├── routes/         # API routes
-│   │   ├── index.js
-│   │   └── contacts.js
-│   └── test.http       # API testing file
+│   └── routes/         # API routes
+│       └── index.js
 ├── package.json        # Root workspace configuration
 └── README.md           # This file
 ```
@@ -33,32 +25,20 @@ CSE 341 Web Services/
 
 -   Node.js (v18 or higher)
 -   pnpm (install with `npm install -g pnpm`)
--   MongoDB (local installation or MongoDB Atlas account)
 
 ### Installation
 
-1. **Clone the repository and install dependencies:**
+1. Install dependencies for all workspaces:
 
 ```bash
 pnpm install
 ```
 
-2. **Set up environment variables:**
+2. Install backend dependencies:
 
 ```bash
-# Copy the example environment file
-cp backend/.env.example backend/.env
-
-# Edit backend/.env with your MongoDB connection string
-```
-
-3. **Start MongoDB:**
-
-```bash
-# If using local MongoDB
-mongod
-
-# Or use MongoDB Atlas (cloud) - update MONGODB_URI in .env
+cd backend
+pnpm install
 ```
 
 ### Running the Application
@@ -66,12 +46,14 @@ mongod
 #### Development Mode
 
 ```bash
-# Run backend with auto-restart
-cd backend
-pnpm run dev
+# Run both frontend and backend
+pnpm dev
 
-# Or from root directory
+# Run only backend
 pnpm dev:backend
+
+# Run only frontend
+pnpm dev:frontend
 ```
 
 #### Production Mode
@@ -81,113 +63,41 @@ pnpm dev:backend
 pnpm start
 ```
 
-## Environment Variables
-
-Create a `backend/.env` file with:
-
-```bash
-# Database Configuration
-MONGODB_URI=mongodb://localhost:27017/cse341-web-services
-
-# Server Configuration
-PORT=3000
-NODE_ENV=development
-```
-
 ## API Endpoints
 
 The backend runs on `http://localhost:3000` with the following endpoints:
 
-### Contacts API
-
--   `GET /api/contacts` - Get all contacts
--   `GET /api/contacts/:id` - Get contact by ID
+-   `GET /` - Health check
 -   `GET /api/test` - API test endpoint
+-   `GET /api/users` - Get all users
+-   `POST /api/users` - Create new user
 
 ### Example API Usage
 
 ```javascript
-// Get all contacts
-fetch('http://localhost:3000/api/contacts')
-	.then((response) => response.json())
-	.then((data) => console.log(data))
-
-// Get contact by ID
-fetch('http://localhost:3000/api/contacts/6872e8294600469b99767f43')
-	.then((response) => response.json())
-	.then((data) => console.log(data))
-
-// Test API endpoint
+// Test the API
 fetch('http://localhost:3000/api/test')
 	.then((response) => response.json())
 	.then((data) => console.log(data))
+
+// Get users
+fetch('http://localhost:3000/api/users')
+	.then((response) => response.json())
+	.then((data) => console.log(data))
+
+// Create user
+fetch('http://localhost:3000/api/users', {
+	method: 'POST',
+	headers: { 'Content-Type': 'application/json' },
+	body: JSON.stringify({ name: 'John Doe', email: 'john@example.com' })
+})
+	.then((response) => response.json())
+	.then((data) => console.log(data))
 ```
-
-## Testing the API
-
-Use the included `backend/test.http` file with the REST Client extension in VS Code:
-
-```http
-### Get all contacts
-GET http://localhost:3000/api/contacts
-
-### Get a contact by id
-GET http://localhost:3000/api/contacts/6872e8294600469b99767f43
-```
-
-## Database Schema
-
-### Contacts Collection
-
-```javascript
-{
-  _id: ObjectId,
-  name: String,
-  email: String,
-  phone: String,
-  createdAt: Date,
-  updatedAt: Date
-}
-```
-
-## Architecture
-
-This application follows a 3-layer architecture pattern:
-
--   **Routes** (`routes/`) - Handle HTTP requests/responses
--   **Controllers** (`controllers/`) - Orchestrate request flow
--   **Services** (`services/`) - Business logic and data processing
--   **Data** (`data/`) - Database connection and configuration
 
 ## Technologies Used
 
--   **Backend**: Node.js, Express.js, MongoDB, CORS
+-   **Backend**: Node.js, Express.js, CORS
 -   **Frontend**: HTML5, CSS3, JavaScript
--   **Database**: MongoDB with native Node.js driver
 -   **Package Manager**: pnpm
 -   **Development**: Native Node.js --watch flag for auto-restart
--   **Testing**: REST Client extension for VS Code
-
-## Adding Sample Data
-
-You can add sample contacts using MongoDB Compass or the MongoDB shell:
-
-```javascript
-// In MongoDB shell or Compass
-db.contacts.insertMany([
-	{
-		name: 'John Doe',
-		email: 'john@example.com',
-		phone: '123-456-7890',
-		createdAt: new Date(),
-		updatedAt: new Date()
-	},
-	{
-		name: 'Jane Smith',
-		email: 'jane@example.com',
-		phone: '987-654-3210',
-		createdAt: new Date(),
-		updatedAt: new Date()
-	}
-])
-```
