@@ -2,13 +2,11 @@
 const express = require('express')
 const router = express.Router()
 
-// GET /api/test - Basic test endpoint
-router.get('/test', (req, res) => {
-	res.json({
-		message: 'API test successful!',
-		timestamp: new Date().toISOString()
-	})
-})
+// Import route modules
+const contactsRoutes = require('./contacts')
+
+// Mount route modules
+router.use('/contacts', contactsRoutes)
 
 // Export the router
 module.exports = router
