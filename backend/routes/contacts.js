@@ -1,5 +1,11 @@
 const express = require('express')
-const { getAllContacts, getContactById } = require('../controllers/contacts')
+const {
+	getAllContacts,
+	getContactById,
+	createContact,
+	updateContact,
+	deleteContact
+} = require('../controllers/contacts')
 
 const router = express.Router()
 
@@ -7,5 +13,11 @@ const router = express.Router()
 router.get('/', getAllContacts)
 // GET /contacts/:id - Get a contact by id
 router.get('/:id', getContactById)
+// POST /contacts - Create a new contact
+router.post('/', createContact)
+// PUT /contacts/:id - Update a contact by id
+router.put('/:id', updateContact)
+// DELETE /contacts/:id - Delete a contact by id
+router.delete('/:id', deleteContact)
 
 module.exports = router
