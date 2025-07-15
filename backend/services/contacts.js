@@ -30,6 +30,42 @@ const ContactService = {
 		const db = getDatabase()
 		// Query MongoDB: find the contact with the given id
 		return await db.collection('contacts').findOne({ _id: new ObjectId(contactId) })
+	},
+
+	/**
+	 * Create a new contact in the database
+	 * @param {Object} contactData - The contact data to insert
+	 * @returns {Promise<Object>} The insertion result with insertedId
+	 */
+	async createContact(contactData) {
+		const db = getDatabase()
+		// Insert the new contact into the 'contacts' collection
+		// MongoDB will automatically generate an _id
+		return await db.collection('contacts').insertOne(contactData)
+	},
+
+	/**
+	 * Update a contact in the database
+	 * @param {string} contactId - The id of the contact to update
+	 * @param {Object} contactData - The contact data to update
+	 * @returns {Promise<Object>} The update result with matchedCount and modifiedCount
+	 */
+	async updateContact(contactId, contactData) {
+		const db = getDatabase()
+		// Update the contact with the given id
+		// Uses $set to replace the fields with new values
+		return await db.collection('contacts').updateOne({ _id: new ObjectId(contactId) }, { $set: contactData })
+	},
+
+	/**
+	 * Delete a contact from the database
+	 * @param {string} contactId - The id of the contact to delete
+	 * @returns {Promise<Object>} The deletion result with deletedCount
+	 */
+	async deleteContact(contactId) {
+		const db = getDatabase()
+		// Delete the contact with the given id
+		return await db.collection('contacts').deleteOne({ _id: new ObjectId(contactId) })
 	}
 }
 
