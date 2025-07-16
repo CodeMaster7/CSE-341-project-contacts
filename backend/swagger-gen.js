@@ -7,8 +7,8 @@ const doc = {
 		description: 'Simple API for managing contacts',
 		version: '1.0.0'
 	},
-	host: undefined,
-	schemes: ['https', 'http'],
+	host: 'https://cse-341-contacts-2i7x.onrender.com',
+	schemes: ['https'],
 	basePath: '/'
 }
 
