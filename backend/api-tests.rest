@@ -2,7 +2,7 @@
 GET http://localhost:3000/contacts
 
 ### Get Contact by ID (replace with real ID)
-GET http://localhost:3000/contacts/6872e8294600469b99767f43
+GET http://localhost:3000/contacts/6872e8294600469b99767f44
 
 ### Create New Contact
 POST http://localhost:3000/contacts
