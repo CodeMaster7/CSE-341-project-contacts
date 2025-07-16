@@ -7,8 +7,8 @@ const doc = {
 		description: 'Simple API for managing contacts',
 		version: '1.0.0'
 	},
-	host: 'localhost:3000',
-	schemes: ['http'],
+	host: undefined,
+	schemes: ['https', 'http'],
 	basePath: '/'
 }
 
@@ -17,7 +17,7 @@ const outputFile = './swagger.json'
 
 // Which files contain your routes
 const endpointsFiles = [
-	'./routes/index.js' // This will scan your routes through index.js
+	'./routes/index.js' // This scans the routes through index.js
 ]
 
 // Generate the swagger documentation
