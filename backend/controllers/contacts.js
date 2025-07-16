@@ -2,6 +2,8 @@ const ContactService = require('../services/contacts')
 
 // Get all contacts controller
 const getAllContacts = async (req, res) => {
+	// #swagger.summary = 'Get all contacts'
+	// #swagger.responses[200] = { description: 'List of contacts', schema: { type: 'array', items: { $ref: '#/definitions/Contact' } } }
 	try {
 		const contacts = await ContactService.getAllContacts()
 		res.json(contacts)
@@ -12,6 +14,9 @@ const getAllContacts = async (req, res) => {
 }
 
 const getContactById = async (req, res) => {
+	// #swagger.summary = 'Get a contact by ID'
+	// #swagger.parameters['id'] = { in: 'path', description: 'Contact ID', required: true, type: 'string' }
+	// #swagger.responses[200] = { description: 'Contact details', schema: { $ref: '#/definitions/Contact' } }
 	const contactId = req.params.id
 	const contact = await ContactService.getContactById(contactId)
 	res.json(contact)
@@ -19,6 +24,8 @@ const getContactById = async (req, res) => {
 
 // Create a new contact controller
 const createContact = async (req, res) => {
+	// #swagger.summary = 'Create a new contact'
+	// #swagger.parameters['body'] = { in: 'body', description: 'Contact data', required: true, schema: { $ref: '#/definitions/Contact' } }
 	try {
 		// Get contact data from request body
 		const { firstName, lastName, email, favoriteColor, birthday } = req.body
@@ -44,6 +51,9 @@ const createContact = async (req, res) => {
 
 // Update a contact controller
 const updateContact = async (req, res) => {
+	// #swagger.summary = 'Update a contact by ID'
+	// #swagger.parameters['id'] = { in: 'path', description: 'Contact ID', required: true, type: 'string' }
+	// #swagger.parameters['body'] = { in: 'body', description: 'Updated contact data', required: true, schema: { $ref: '#/definitions/Contact' } }
 	try {
 		// Get contact ID from URL parameter
 		const contactId = req.params.id
@@ -77,6 +87,9 @@ const updateContact = async (req, res) => {
 
 // Delete a contact controller
 const deleteContact = async (req, res) => {
+	// #swagger.summary = 'Delete a contact by ID'
+	// #swagger.parameters['id'] = { in: 'path', description: 'Contact ID', required: true, type: 'string' }
+	// #swagger.responses[204] = { description: 'Contact deleted successfully' }
 	try {
 		// Get contact ID from URL parameter
 		const contactId = req.params.id
